@@ -25,6 +25,7 @@ import { usePresence, usePresenceListener } from 'ably/react';
 import { useUser } from '@clerk/nextjs';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { UsageBadge } from './ui/usage-badge';
+import { useRealtimeStatus } from './realtime-provider';
 
 const navItems = [
     { name: 'Dashboard', icon: LayoutDashboard, href: '/' },
@@ -42,6 +43,7 @@ const navItems = [
 export function Sidebar() {
     const pathname = usePathname();
     const { user } = useUser();
+    const { isEnabled } = useRealtimeStatus();
     const [isCollapsed, setIsCollapsed] = useState(false);
 
     return (
@@ -119,7 +121,7 @@ export function Sidebar() {
                 )}
 
                 {/* Team Presence Indicator */}
-                {process.env.NEXT_PUBLIC_ABLY_API_KEY ? (
+                {isEnabled ? (
                     <TeamPresence isCollapsed={isCollapsed} user={user} />
                 ) : (
                     !isCollapsed && (

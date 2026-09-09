@@ -34,6 +34,7 @@ import {
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useChannel, usePresence, usePresenceListener } from 'ably/react';
+import { useRealtimeStatus } from '@/components/realtime-provider';
 import { useUser } from '@clerk/nextjs';
 import { createPost, updatePost } from '@/app/actions/posts';
 import { getComments, deleteComment, resolveComment } from '@/app/actions/comments';
@@ -91,6 +92,7 @@ const platforms = [
 
 export default function Composer({ brandId, initialPost }: { brandId?: string; initialPost?: any }) {
     const { user: clerkUser } = useUser();
+    const { isEnabled } = useRealtimeStatus();
     const [contents, setContents] = useState<Record<string, string>>(
         initialPost?.platform_overrides || { default: initialPost?.content || '' }
     );
@@ -416,7 +418,7 @@ export default function Composer({ brandId, initialPost }: { brandId?: string; i
 
     return (
         <div className="grid h-[calc(100vh-120px)] grid-cols-1 gap-8 md:col-span-5 animate-in fade-in slide-in-from-bottom-4 duration-700">
-            {process.env.NEXT_PUBLIC_ABLY_API_KEY && (
+            {isEnabled && (
                 <ComposerRealtime
                     clerkUser={clerkUser}
                     setContents={setContents}
@@ -804,7 +806,7 @@ export default function Composer({ brandId, initialPost }: { brandId?: string; i
                                                     <span className="text-sm text-zinc-500">@flux · 1m</span>
                                                 </div>
                                                 <div className="mt-1 whitespace-pre-wrap text-[15px] leading-relaxed text-zinc-100">
-                                                    {currentContent || <span className="text-zinc-600">What's happening?</span>}
+                                                    {currentContent || <span className="text-zinc-600">What&apos;s happening?</span>}
                                                 </div>
                                                 {selectedMedia.length > 0 && (
                                                     <div className={cn(
@@ -1175,7 +1177,7 @@ export default function Composer({ brandId, initialPost }: { brandId?: string; i
                                             "text-[11px] text-zinc-300 italic",
                                             comment.is_resolved && "line-through text-zinc-500"
                                         )}>
-                                            "{comment.content}"
+                                            &quot;{comment.content}&quot;
                                         </p>
                                     </div>
                                 </div>

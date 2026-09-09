@@ -87,7 +87,7 @@ export function BrandVoiceConfig({ brandId }: BrandVoiceConfigProps) {
                         AI Brand Voice
                     </h2>
                     <p className="text-gray-400 text-sm mt-1">
-                        Configure how AI generates content in your brand's unique voice
+                        Configure how AI generates content in your brand&apos;s unique voice
                     </p>
                 </div>
 
@@ -263,7 +263,7 @@ export function BrandVoiceConfig({ brandId }: BrandVoiceConfigProps) {
                     Train from Sample Content
                 </h3>
                 <p className="text-gray-400 text-sm mb-4">
-                    Paste examples of your best-performing content and AI will learn your brand's unique voice.
+                    Paste examples of your best-performing content and AI will learn your brand&apos;s unique voice.
                 </p>
 
                 <Textarea

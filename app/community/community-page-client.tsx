@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { MessageSquare, Radio, Brain, Loader2 } from 'lucide-react';
@@ -18,13 +18,15 @@ interface CommunityPageClientProps {
 function CommunityTabs({ initialFeedItems, brandId, brandVoice }: CommunityPageClientProps) {
     const searchParams = useSearchParams();
     const [activeTab, setActiveTab] = useState('inbox');
+    const tabParam = searchParams.get('tab');
+    const [prevTabParam, setPrevTabParam] = useState(tabParam);
 
-    useEffect(() => {
-        const tab = searchParams.get('tab');
-        if (tab && ['inbox', 'listening', 'voice'].includes(tab)) {
-            setActiveTab(tab);
+    if (tabParam !== prevTabParam) {
+        setPrevTabParam(tabParam);
+        if (tabParam && ['inbox', 'listening', 'voice'].includes(tabParam)) {
+            setActiveTab(tabParam);
         }
-    }, [searchParams]);
+    }
 
     const handleTabChange = (value: string) => {
         setActiveTab(value);

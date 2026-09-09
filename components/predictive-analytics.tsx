@@ -111,12 +111,13 @@ function DonutChart({
     const radius = size / 2 - 10;
     const circumference = 2 * Math.PI * radius;
 
-    let offset = 0;
     const segments = data.map((item, index) => {
         const percentage = item.value / total;
         const dashLength = circumference * percentage;
+        const offset = data
+            .slice(0, index)
+            .reduce((sum, prev) => sum + (circumference * prev.value) / total, 0);
         const dashOffset = circumference - offset;
-        offset += dashLength;
 
         return {
             ...item,

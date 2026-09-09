@@ -35,7 +35,7 @@ export function PlatformConnect({ draftContent }: PlatformConnectProps) {
                 className="bg-zinc-900/50 border border-zinc-800 rounded-2xl p-6 mb-8 text-left backdrop-blur-sm"
             >
                 <div className="text-xs font-mono text-zinc-500 mb-2 uppercase tracking-wider">Your Draft</div>
-                <p className="text-zinc-300 italic line-clamp-2">"{draftContent}"</p>
+                <p className="text-zinc-300 italic line-clamp-2">&quot;{draftContent}&quot;</p>
             </motion.div>
 
             <div className="grid grid-cols-2 gap-4 mb-8">
@@ -59,7 +59,7 @@ export function PlatformConnect({ draftContent }: PlatformConnectProps) {
                     onClick={handleSkip}
                     className="text-zinc-500 hover:text-white transition-colors text-sm flex items-center gap-2 mx-auto"
                 >
-                    Skip for now, I'll connect later <ArrowRight size={14} />
+                    Skip for now, I&apos;ll connect later <ArrowRight size={14} />
                 </button>
             </motion.div>
         </div>
