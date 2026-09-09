@@ -6,14 +6,16 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import { useRealtimeStatus } from '@/components/realtime-provider';
 
 export function TeamPresence() {
     const { user } = useUser();
+    const { isEnabled } = useRealtimeStatus();
     const [activeUsers, setActiveUsers] = useState<any[]>([]);
 
     return (
         <div className="space-y-4">
-            {process.env.NEXT_PUBLIC_ABLY_API_KEY && (
+            {isEnabled && (
                 <TeamPresenceRealtime user={user} setActiveUsers={setActiveUsers} />
             )}
             <AnimatePresence mode="popLayout">

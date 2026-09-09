@@ -62,20 +62,27 @@ function SettingsContent() {
         initData();
     }, []);
 
-    // Handle OAuth callbacks
-    useEffect(() => {
-        const success = searchParams.get('success');
-        const error = searchParams.get('error');
-        const platform = searchParams.get('platform');
+    // Handle OAuth callbacks: switch to the platforms tab during render to
+    // avoid a cascading render from calling setState inside an effect.
+    const success = searchParams.get('success');
+    const error = searchParams.get('error');
+    const platform = searchParams.get('platform');
+    const [prevCallbackKey, setPrevCallbackKey] = useState<string | null>(null);
 
-        if (success === 'connected' && platform) {
-            toast.success(`${platform} connected successfully!`);
-            setActiveTab('platforms');
-        } else if (error && platform) {
-            toast.error(`Failed to connect ${platform}: ${error}`);
+    if (`${success}|${error}|${platform}` !== prevCallbackKey) {
+        setPrevCallbackKey(`${success}|${error}|${platform}`);
+        if ((success === 'connected' || error) && platform) {
             setActiveTab('platforms');
         }
-    }, [searchParams]);
+    }
+
+    useEffect(() => {
+        if (success === 'connected' && platform) {
+            toast.success(`${platform} connected successfully!`);
+        } else if (error && platform) {
+            toast.error(`Failed to connect ${platform}: ${error}`);
+        }
+    }, [success, error, platform]);
 
     const sections = [
         { title: 'Profile', description: `Connected as ${user?.primaryEmailAddress?.emailAddress || 'User Profile'}`, icon: User },

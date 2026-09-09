@@ -28,11 +28,6 @@ export function BrandVoiceSettings({ brandId }: BrandVoiceSettingsProps) {
         technicality: 0.5
     });
 
-    useEffect(() => {
-        loadStyleVault();
-        loadBrandVoice();
-    }, [brandId]);
-
     async function loadBrandVoice() {
         const voice = await getBrandVoice(brandId);
         if (voice) {
@@ -69,6 +64,12 @@ export function BrandVoiceSettings({ brandId }: BrandVoiceSettingsProps) {
         }
         setLoading(false);
     }
+
+    useEffect(() => {
+        loadStyleVault();
+        loadBrandVoice();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [brandId]);
 
     async function handleAddExample() {
         if (!newExample.trim()) return;

@@ -88,7 +88,7 @@ export function AutoTopupSettings({ initialProfile }: { initialProfile: any }) {
                                 className="[&_[role=slider]]:bg-amber-500"
                             />
                             <p className="text-[10px] text-muted-foreground/60 italic">
-                                "Topup will trigger when balance falls below {threshold} and a high-impact post is detected."
+                                &quot;Topup will trigger when balance falls below {threshold} and a high-impact post is detected.&quot;
                             </p>
                         </div>
 
@@ -106,7 +106,7 @@ export function AutoTopupSettings({ initialProfile }: { initialProfile: any }) {
                                 className="[&_[role=slider]]:bg-amber-500"
                             />
                             <p className="text-[10px] text-muted-foreground/60 italic">
-                                "Each automatic refill adds {amount} credits to your account (approx ${(amount * 0.2).toFixed(2)})."
+                                &quot;Each automatic refill adds {amount} credits to your account (approx ${(amount * 0.2).toFixed(2)}).&quot;
                             </p>
                         </div>
 

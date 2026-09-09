@@ -105,7 +105,7 @@ export default function StrategyView({ initialStrategies }: { initialStrategies:
                                 <div className="flex-1">
                                     <h2 className="text-xl font-bold mb-2">Morning Briefing</h2>
                                     <p className="text-muted-foreground leading-relaxed max-w-2xl">
-                                        "Your brand voice is shifting towards <span className="text-white font-semibold">Technical/Authoritative</span>. To maintain balance, I recommend adding 2-3 <span className="text-white font-semibold">Behind-the-scenes</span> posts this week. Your top follower segment (Engineers) responds best to raw process shots."
+                                        &quot;Your brand voice is shifting towards <span className="text-white font-semibold">Technical/Authoritative</span>. To maintain balance, I recommend adding 2-3 <span className="text-white font-semibold">Behind-the-scenes</span> posts this week. Your top follower segment (Engineers) responds best to raw process shots.&quot;
                                     </p>
                                     <div className="mt-6 flex gap-3">
                                         <Button size="sm" className="bg-primary text-xs h-9 px-6">Create Drafts</Button>

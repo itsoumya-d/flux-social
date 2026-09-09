@@ -138,7 +138,7 @@ export function OnboardingWizard() {
                             <DialogHeader>
                                 <DialogTitle className="text-3xl font-bold text-center">Welcome to FluxSocial</DialogTitle>
                                 <DialogDescription className="text-center text-lg mt-2">
-                                    Let's turn your social media into a growth engine in less than 2 minutes.
+                                    Let&apos;s turn your social media into a growth engine in less than 2 minutes.
                                 </DialogDescription>
                             </DialogHeader>
                             <Button size="lg" className="w-full bg-indigo-600 hover:bg-indigo-500 mt-8" onClick={() => setStep("goals")}>
@@ -151,8 +151,8 @@ export function OnboardingWizard() {
                     {step === "goals" && (
                         <div className="space-y-6">
                             <DialogHeader>
-                                <DialogTitle className="text-2xl">What's your primary focus?</DialogTitle>
-                                <DialogDescription>We'll customize your AI agent based on these goals.</DialogDescription>
+                                <DialogTitle className="text-2xl">What&apos;s your primary focus?</DialogTitle>
+                                <DialogDescription>We&apos;ll customize your AI agent based on these goals.</DialogDescription>
                             </DialogHeader>
 
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
@@ -256,7 +256,7 @@ export function OnboardingWizard() {
                                 <Check className="w-8 h-8" />
                             </div>
                             <DialogHeader>
-                                <DialogTitle className="text-3xl font-bold text-center">You're all set!</DialogTitle>
+                                <DialogTitle className="text-3xl font-bold text-center">You&apos;re all set!</DialogTitle>
                                 <DialogDescription className="text-center text-lg">
                                     FluxSocial is ready to supercharge your growth.
                                 </DialogDescription>

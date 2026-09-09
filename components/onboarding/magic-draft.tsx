@@ -50,8 +50,8 @@ export function MagicDraft({ persona, onDraftGenerated }: MagicDraftProps) {
                 animate={{ opacity: 1 }}
                 className="mb-8"
             >
-                <h1 className="text-4xl font-bold mb-3">Let's write your first post.</h1>
-                <p className="text-zinc-400 text-lg">Don't overthink it. What's on your mind?</p>
+                <h1 className="text-4xl font-bold mb-3">Let&apos;s write your first post.</h1>
+                <p className="text-zinc-400 text-lg">Don&apos;t overthink it. What&apos;s on your mind?</p>
             </motion.div>
 
             {!fullContent ? (

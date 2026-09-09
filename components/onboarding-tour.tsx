@@ -1,15 +1,12 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Sparkles, ArrowRight } from "lucide-react"
 
 export function OnboardingTour() {
-    const [mounted, setMounted] = useState(false)
-
     useEffect(() => {
-        setMounted(true)
         const hasSeenTour = localStorage.getItem("flux_onboarding_completed")
 
         if (!hasSeenTour) {
@@ -57,6 +54,5 @@ export function OnboardingTour() {
         }
     }, [])
 
-    if (!mounted) return null
     return null
 }

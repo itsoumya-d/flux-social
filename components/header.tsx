@@ -10,10 +10,12 @@ import { useState, useEffect } from 'react';
 import { globalSearch } from '@/app/actions/search';
 import { useRouter } from 'next/navigation';
 import { NotificationCenter } from './notification-center';
+import { useRealtimeStatus } from './realtime-provider';
 
 export function Header() {
     const { user } = useUser();
     const router = useRouter();
+    const { isEnabled } = useRealtimeStatus();
     const [searchQuery, setSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState<any[]>([]);
     const [isSearching, setIsSearching] = useState(false);
@@ -41,7 +43,7 @@ export function Header() {
 
     return (
         <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b bg-background/60 px-8 backdrop-blur-xl">
-            {process.env.NEXT_PUBLIC_ABLY_API_KEY && <NotificationListener />}
+            {isEnabled && <NotificationListener />}
             <div className="flex flex-1 items-center gap-4">
                 <div className="group relative flex w-full max-w-md items-center">
                     <Search className="absolute left-3 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />

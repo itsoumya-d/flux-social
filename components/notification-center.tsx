@@ -11,10 +11,12 @@ import {
 import { getNotifications, markAsRead } from '@/app/actions/notifications';
 import { cn } from '@/lib/utils';
 import { useChannel } from 'ably/react';
+import { useRealtimeStatus } from '@/components/realtime-provider';
 
 export function NotificationCenter() {
     const [notifications, setNotifications] = useState<any[]>([]);
     const [open, setOpen] = useState(false);
+    const { isEnabled } = useRealtimeStatus();
 
     const fetchNotifications = async () => {
         const data = await getNotifications();
@@ -22,18 +24,14 @@ export function NotificationCenter() {
     };
 
     useEffect(() => {
-        fetchNotifications();
-    }, []);
-
-    try {
-        useChannel('notifications', (message) => {
-            // Refresh notifications when a new one is broadcasted
-            // Actually, the broadcast is for UI toast, but we want the list updated too
-            setTimeout(fetchNotifications, 1000); // Small delay to let DB update
+        let active = true;
+        getNotifications().then((data) => {
+            if (active) setNotifications(data);
         });
-    } catch (e) {
-        // Realtime notifications disabled
-    }
+        return () => {
+            active = false;
+        };
+    }, []);
 
     const unreadCount = notifications.filter(n => !n.is_read).length;
 
@@ -55,6 +53,7 @@ export function NotificationCenter() {
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
+            {isEnabled && <NotificationListener onNotification={fetchNotifications} />}
             <PopoverTrigger asChild>
                 <Button variant="ghost" size="icon" className="relative rounded-xl hover:bg-white/10">
                     <Bell className="h-5 w-5 text-muted-foreground" />
@@ -124,4 +123,13 @@ export function NotificationCenter() {
             </PopoverContent>
         </Popover>
     );
+}
+
+function NotificationListener({ onNotification }: { onNotification: () => void }) {
+    useChannel('notifications', () => {
+        // Refresh the list after the DB write triggered by the broadcast.
+        setTimeout(onNotification, 1000);
+    });
+
+    return null;
 }
