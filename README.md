@@ -20,6 +20,18 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Post review dispatch regression tests
+
+With Node.js 24, run the dependency-free action tests:
+
+```bash
+node --experimental-vm-modules --test tests/post-review-dispatch.test.mjs
+```
+
+These tests execute the complete production posts action module with Node's built-in TypeScript type stripping and isolated, inert mocks for every import. They do not install dependencies, load application SDKs, use credentials, or call a database or publishing service. They check that review-required posts are saved without immediate or scheduled publisher dispatch, while preserving non-review dispatch, saved fields, notifications and error behavior.
+
+This is a fail-closed dispatch guard, not a complete approval workflow: review-required posts still use the existing `draft` status, the approval queue expects `pending_review`, and approval does not yet dispatch to the publisher. These tests do not verify UI, authentication integration, database policies or real provider delivery. The existing build/lint CI does not run this command automatically.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

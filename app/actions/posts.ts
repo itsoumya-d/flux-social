@@ -71,25 +71,28 @@ export async function createPost(postData: {
         throw new Error('Failed to create post');
     }
 
-    // Attempt to publish to Ayrshare with First Comment support
-    try {
-        await publishToAyrshare({
-            post: postData.content,
-            platforms: postData.platforms,
-            scheduleDate: postData.scheduledAt,
-            // Use platform override if available
-            ...(postData.platformOverrides && {
-                overrides: postData.platformOverrides
-            }),
-            // Include first comment for Instagram (Buffer feature)
-            ...(postData.firstComment && postData.platforms.includes('instagram') && {
-                instagramOptions: {
-                    firstComment: postData.firstComment
-                }
-            })
-        });
-    } catch (err) {
-        console.error('Ayrshare scheduling failed:', err);
+    // Keep review-required posts local instead of publishing or scheduling them.
+    if (!postData.requiresReview) {
+        // Attempt to publish to Ayrshare with First Comment support
+        try {
+            await publishToAyrshare({
+                post: postData.content,
+                platforms: postData.platforms,
+                scheduleDate: postData.scheduledAt,
+                // Use platform override if available
+                ...(postData.platformOverrides && {
+                    overrides: postData.platformOverrides
+                }),
+                // Include first comment for Instagram (Buffer feature)
+                ...(postData.firstComment && postData.platforms.includes('instagram') && {
+                    instagramOptions: {
+                        firstComment: postData.firstComment
+                    }
+                })
+            });
+        } catch (err) {
+            console.error('Ayrshare scheduling failed:', err);
+        }
     }
 
     // Notify other users via Ably and persistence
