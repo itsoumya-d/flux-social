@@ -128,23 +128,23 @@ async function loadActions({
         process: Object.freeze({ env: Object.freeze({ NEXT_PUBLIC_ABLY_API_KEY: ablyKey }) }),
         console: Object.freeze({ error: (...args) => calls.errors.push(args) }),
     }, { codeGeneration: { strings: false, wasm: false } });
-    const module = new SourceTextModule(actionSource, {
+    const actionModule = new SourceTextModule(actionSource, {
         context,
         identifier: actionUrl.href,
         importModuleDynamically(specifier) {
             throw new Error(`Dynamic imports are forbidden in this test: ${specifier}`);
         },
     });
-    await module.link((specifier) => {
+    await actionModule.link((specifier) => {
         assert.ok(mocks.has(specifier), `Unmocked production import: ${specifier}`);
         const exports = mocks.get(specifier);
         return new SyntheticModule(Object.keys(exports), function () {
             for (const [name, value] of Object.entries(exports)) this.setExport(name, value);
         }, { context, identifier: `mock:${specifier}` });
     });
-    await module.evaluate();
+    await actionModule.evaluate();
 
-    return { actions: module.namespace, calls, get savedPost() { return savedPost; } };
+    return { actions: actionModule.namespace, calls, get savedPost() { return savedPost; } };
 }
 
 function assertSaved(harness, result, input, requiresReview) {
